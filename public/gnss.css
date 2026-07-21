@@ -1,0 +1,44 @@
+/* layout for the GNSS monitor - xp.css supplies the chrome */
+html, body { height: 100%; margin: 0; background: #3a6ea5; overflow: hidden; }
+
+body, button, select, input, label, legend, fieldset, table,
+.window-body, .status-bar-field { font-family: Tahoma, 'Segoe UI', 'DejaVu Sans', Arial, sans-serif; font-size: 11px; }
+
+#app { display: flex; flex-direction: column; position: absolute; inset: 4px; }
+#app .window-body-main { flex: 1; display: flex; flex-direction: column; margin: 0; padding: 4px; min-height: 0; gap: 4px; }
+
+.toolbar { display: flex; gap: 4px; align-items: center; flex-wrap: wrap; }
+.toolbar .tb-sep { width: 1px; height: 20px; background: #aca899; margin: 0 2px; }
+.toolbar .warn { color: #a00; }
+
+.panes { display: flex; gap: 4px; flex: 1; min-height: 0; }
+.pane { margin: 0; overflow: auto; background: #fff; }
+#paneData { flex: 0 0 200px; }
+#paneSky { flex: 1 1 auto; display: flex; flex-direction: column; align-items: center; }
+#paneSnr { flex: 0 0 260px; }
+
+#dataTable { border-collapse: collapse; width: 100%; }
+#dataTable td { padding: 2px 4px; border-bottom: 1px solid #eee; }
+#dataTable td:last-child { text-align: right; font-family: 'Courier New', monospace; }
+.maplink { margin: 6px 4px; }
+
+#sky { width: 100%; max-width: 380px; flex: 1; min-height: 0; }
+#skyLegend { display: flex; gap: 8px; flex-wrap: wrap; padding: 2px; }
+#skyLegend span { display: inline-flex; align-items: center; gap: 3px; }
+#skyLegend i { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+
+#bars { display: flex; gap: 3px; align-items: flex-end; height: calc(100% - 8px); padding: 4px; }
+#bars .bar { width: 18px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; }
+#bars .bar .fill { width: 100%; border: 1px solid rgba(0,0,0,.3); }
+#bars .bar .fill.unused { opacity: .35; }
+#bars .bar .lbl { font-size: 9px; font-family: 'Courier New', monospace; }
+#bars .bar .snr { font-size: 9px; color: #555; }
+
+.consolePane { flex: 0 0 120px; margin: 0; overflow: hidden; display: flex; flex-direction: column; }
+#console {
+  flex: 1; margin: 0; overflow-y: scroll; background: #fff; color: #000;
+  font-family: 'Courier New', monospace; font-size: 11px; white-space: pre;
+}
+.status-bar { user-select: none; }
+.status-bar-field { padding: 1px 6px; }
+#sbConn.demo { color: #a00; font-weight: bold; }

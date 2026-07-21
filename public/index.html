@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GNSS Monitor online - live GPS / NMEA / u-blox UBX viewer in your browser</title>
+<meta name="description" content="Free online GNSS monitor: connect a USB/serial GPS receiver with the Web Serial API and see live position, satellites sky plot, signal levels and raw NMEA - decodes NMEA and u-blox UBX binary in your browser via WebAssembly. No install, nothing uploaded.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='14' font-size='14'>🛰</text></svg>">
+<link rel="canonical" href="https://www.clearevo.com/gnss/">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-H457QK43L6"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-H457QK43L6');
+</script>
+<link rel="stylesheet" href="xp.css">
+<link rel="stylesheet" href="gnss.css">
+</head>
+<body>
+
+<div class="window" id="app">
+  <div class="title-bar">
+    <div class="title-bar-text" id="titleText">GNSS Monitor - ClearEvo</div>
+  </div>
+  <div class="window-body window-body-main">
+    <div class="toolbar">
+      <button id="btnConnect" title="Connect a real serial GNSS receiver (Web Serial)">🛰 Connect</button>
+      <select id="selBaud" title="Baud rate">
+        <option>4800</option><option selected>9600</option><option>38400</option>
+        <option>57600</option><option>115200</option><option>230400</option><option>460800</option>
+      </select>
+      <button id="btnDisconnect" disabled>Disconnect</button>
+      <div class="tb-sep"></div>
+      <button id="btnOpenLog" title="Replay an NMEA/UBX log file">📂 Open Log...</button>
+      <div class="tb-sep"></div>
+      <select id="selDemo" title="Simulated device - not real hardware">
+        <option value="demo-ublox">DEMO: u-blox-like (simulated)</option>
+        <option value="demo-mtk">DEMO: MTK-like (simulated)</option>
+      </select>
+      <button id="btnDemo" title="Start a DEMO simulated receiver - not a real device">▶ Demo</button>
+      <div class="tb-sep"></div>
+      <button id="btnClear">Clear</button>
+      <span id="unsupported" class="warn" hidden>No Web Serial in this browser - real devices need Chrome/Edge desktop; DEMO and log replay still work.</span>
+    </div>
+
+    <div class="panes">
+      <fieldset class="pane" id="paneData">
+        <legend>Data</legend>
+        <table id="dataTable">
+          <tr><td>Latitude</td><td id="fLat">-</td></tr>
+          <tr><td>Longitude</td><td id="fLon">-</td></tr>
+          <tr><td>Alt (MSL) m</td><td id="fAlt">-</td></tr>
+          <tr><td>Ellipsoidal m</td><td id="fEll">-</td></tr>
+          <tr><td>Geoid sep m</td><td id="fGeoid">-</td></tr>
+          <tr><td>Fix</td><td id="fFix">-</td></tr>
+          <tr><td>Quality</td><td id="fQuality">-</td></tr>
+          <tr><td>Sats used</td><td id="fUsed">-</td></tr>
+          <tr><td>HDOP</td><td id="fHdop">-</td></tr>
+          <tr><td>VDOP</td><td id="fVdop">-</td></tr>
+          <tr><td>PDOP</td><td id="fPdop">-</td></tr>
+          <tr><td>Speed kn</td><td id="fSpeed">-</td></tr>
+          <tr><td>Course °</td><td id="fCourse">-</td></tr>
+          <tr><td>RMC time</td><td id="fTime">-</td></tr>
+        </table>
+        <p class="maplink"><a id="mapLink" href="#" target="_blank" rel="noopener" hidden>open in map ↗</a></p>
+      </fieldset>
+
+      <fieldset class="pane" id="paneSky">
+        <legend>Sky view</legend>
+        <svg id="sky" viewBox="-110 -110 220 220" role="img" aria-label="satellite sky plot"></svg>
+        <div id="skyLegend"></div>
+      </fieldset>
+
+      <fieldset class="pane" id="paneSnr">
+        <legend>Signal (SNR dB-Hz)</legend>
+        <div id="bars"></div>
+      </fieldset>
+    </div>
+
+    <fieldset class="pane consolePane">
+      <legend>Messages</legend>
+      <pre id="console"></pre>
+    </fieldset>
+
+    <div class="status-bar">
+      <p class="status-bar-field" id="sbConn">Disconnected</p>
+      <p class="status-bar-field" id="sbSats">0 sats</p>
+      <p class="status-bar-field" id="sbFix">no fix</p>
+      <p class="status-bar-field" id="sbAbout">100% in-browser - nothing uploaded ·
+        <a href="https://play.google.com/store/apps/details?id=com.clearevo.bluetooth_gnss" target="_blank" rel="noopener">Bluetooth GNSS app</a> ·
+        <a href="https://github.com/ykasidit/bluetooth_gnss/tree/wasm" target="_blank" rel="noopener">parser source</a></p>
+    </div>
+  </div>
+</div>
+
+<noscript><p style="color:#fff;padding:1em">GNSS Monitor needs JavaScript.</p></noscript>
+<script>window.GNSS_VERSION='dev'</script>
+<script type="module" src="app.js"></script>
+</body>
+</html>
