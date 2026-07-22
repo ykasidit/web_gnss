@@ -46,6 +46,9 @@ done
 VERSION=$(git describe --tags --always --dirty 2>/dev/null || echo dev)
 sed -i "s|window.GNSS_VERSION='dev'|window.GNSS_VERSION='$VERSION'|" "$WORK/index.html"
 cp "$WORK/index.html" dist/
+# ponytail: PWA files unhashed - they rarely change and manifest must keep a stable name
+cp "$WORK/manifest.json" "$WORK"/icon-*.png dist/
+grep -q '"manifest.json"' dist/index.html
 
 # self-check
 ! grep -q "'./gnss_wasm.js'" dist/assets/app.*.js
