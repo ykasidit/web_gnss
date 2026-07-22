@@ -96,6 +96,7 @@ $('btnOpenLog').onclick = () => {
   input.onchange = () => guarded(async () => {
     const f = input.files[0];
     if (!f) return;
+    if (f.size > 256 * 1048576) { con.push(`[log is ${(f.size / 1048576).toFixed(0)} MB - replay is limited to 256 MB]`); renderConsole(); return; }
     await disconnect();
     parser.reset();
     const bytes = new Uint8Array(await f.arrayBuffer());
