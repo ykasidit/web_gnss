@@ -13,7 +13,7 @@ await init({ module_or_path: new URL('./gnss_wasm_bg.wasm', import.meta.url) });
 const parser = new GnssParser();
 
 const VER = window.GNSS_VERSION || 'dev';
-$('titleText').textContent = `GNSS Monitor [${VER}] - ClearEvo`;
+$('titleText').textContent = `🛰 ClearEvo.com GNSS Monitor [${VER}]`;
 document.title = `GNSS Monitor online ${VER} - live GPS / NMEA / u-blox UBX viewer in your browser`;
 
 // ---------- connection ----------
