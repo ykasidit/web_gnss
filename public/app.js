@@ -112,6 +112,9 @@ $('btnOpenLog').onclick = () => {
 
 $('btnClear').onclick = () => { parser.reset(); con.clear(); render(); };
 
+let osmUrl = '';
+$('mapLink').onclick = (e) => { e.preventDefault(); if (osmUrl) window.open(osmUrl, '_blank', 'noopener'); };
+
 // ---------- rendering ----------
 const SKY_R = 100;
 
@@ -163,7 +166,9 @@ function render() {
   }
   const hasFix = f.lat !== '-' && f.lon !== '-';
   $('mapLink').hidden = !hasFix;
-  if (hasFix) $('mapLink').href = `https://www.openstreetmap.org/?mlat=${p.lat}&mlon=${p.lon}#map=16/${p.lat}/${p.lon}`;
+  // coords never go in the href: GA4 enhanced measurement records outbound
+  // link_url on click, which would leak the position to analytics
+  if (hasFix) osmUrl = `https://www.openstreetmap.org/?mlat=${p.lat}&mlon=${p.lon}#map=16/${p.lat}/${p.lon}`;
 
   const sats = sortSats(p.sats || []);
   renderSky(sats);
