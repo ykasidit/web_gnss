@@ -59,7 +59,16 @@ async function disconnect() {
   $('sbConn').classList.remove('demo');
 }
 
-$('btnConnect').onclick = async () => {
+// serialize connect flows: overlapping disconnect/open (e.g. double-tap on
+// Demo) orphans a port whose read loop keeps filling the console forever
+let busy = false;
+async function guarded(fn) {
+  if (busy) return;
+  busy = true;
+  try { await fn(); } finally { busy = false; }
+}
+
+$('btnConnect').onclick = () => guarded(async () => {
   if (!supported) { alert('Web Serial is not available in this browser - use Chrome or Edge on desktop, or try the DEMO.'); return; }
   await disconnect();
   try {
@@ -68,23 +77,23 @@ $('btnConnect').onclick = async () => {
     parser.reset();
     connectPort(p);
   } catch (e) { if (e.name !== 'NotFoundError') { con.push(`[${e.message}]`); renderConsole(); } }
-};
+});
 
 $('btnDisconnect').onclick = disconnect;
 
-$('btnDemo').onclick = async () => {
+$('btnDemo').onclick = () => guarded(async () => {
   await disconnect();
   const p = new DemoPort($('selDemo').value);
   await p.open();
   parser.reset();
   con.push(`[DEMO MODE - ${p.label} - simulated device, NOT real hardware; fixed position: McCormick Hospital, Chiang Mai]`);
   connectPort(p);
-};
+});
 
 $('btnOpenLog').onclick = () => {
   const input = document.createElement('input');
   input.type = 'file';
-  input.onchange = async () => {
+  input.onchange = () => guarded(async () => {
     const f = input.files[0];
     if (!f) return;
     await disconnect();
@@ -97,7 +106,7 @@ $('btnOpenLog').onclick = () => {
     }
     con.push(`[log replayed: ${f.name}, ${bytes.length} bytes]`);
     render();
-  };
+  });
   input.click();
 };
 
