@@ -3,10 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GNSS Monitor online - live GPS / NMEA / u-blox UBX viewer in your browser</title>
-<meta name="description" content="Free online GNSS monitor: connect a USB/serial GPS receiver with the Web Serial API and see live position, satellites sky plot, signal levels and raw NMEA - decodes NMEA and u-blox UBX binary in your browser via WebAssembly. No install, nothing uploaded.">
+<title>Online GPS Viewer - Connect Bluetooth & USB GNSS Receivers in Your Browser (NMEA / u-blox UBX)</title>
+<meta name="description" content="Free online GPS/GNSS monitor: connect an external Bluetooth or USB GPS receiver right in your browser - works on Android phones (Chrome) and desktop. Live position, satellite sky plot, signal levels, raw NMEA and u-blox UBX decoding via WebAssembly. No install, nothing uploaded.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='14' font-size='14'>🛰</text></svg>">
 <link rel="canonical" href="https://www.clearevo.com/gnss/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.clearevo.com/gnss/">
+<meta property="og:title" content="Online GPS Viewer - Connect Bluetooth & USB GNSS Receivers in Your Browser">
+<meta property="og:description" content="Live position, satellite sky plot, signal levels, raw NMEA and u-blox UBX - external Bluetooth or USB GPS receivers, on Android phones and desktop. No install.">
+<meta property="og:image" content="https://www.clearevo.com/images/gnss_monitor_online_screenshot.png">
+<meta name="twitter:card" content="summary_large_image">
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-H457QK43L6"></script>
 <script>
@@ -27,7 +33,7 @@
   </div>
   <div class="window-body window-body-main">
     <div class="toolbar">
-      <button id="btnConnect" title="Connect a real serial GNSS receiver (Web Serial)">🛰 Connect</button>
+      <button id="btnConnect" title="Connect a Bluetooth or USB serial GNSS receiver (Web Serial)">🛰 Connect</button>
       <select id="selBaud" title="Baud rate">
         <option>4800</option><option selected>9600</option><option>38400</option>
         <option>57600</option><option>115200</option><option>230400</option><option>460800</option>
@@ -43,7 +49,7 @@
       <button id="btnDemo" title="Start a DEMO simulated receiver - not a real device">▶ Demo</button>
       <div class="tb-sep"></div>
       <button id="btnClear">Clear</button>
-      <span id="unsupported" class="warn" hidden>No Web Serial in this browser - real devices need Chrome/Edge desktop; DEMO and log replay still work.</span>
+      <span id="unsupported" class="warn" hidden>No Web Serial in this browser - real devices need Chrome/Edge (desktop, or Chrome on Android for Bluetooth); DEMO and log replay still work.</span>
     </div>
 
     <div class="panes">
