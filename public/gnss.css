@@ -45,3 +45,13 @@ body, button, select, input, label, legend, fieldset, table,
 
 /* XP Luna title bars use Trebuchet MS bold; bundled pixel font as retro fallback */
 .title-bar-text { font-family: "Trebuchet MS", "Pixelated MS Sans Serif", Tahoma, sans-serif; }
+
+/* phone layout: stack the panes vertically, let the body scroll */
+@media (max-width: 700px) {
+  #app .window-body-main { overflow-y: auto; }
+  .panes { flex-direction: column; flex: none; }
+  #paneData, #paneSky, #paneSnr { flex: none; }
+  #paneSky svg { max-width: 280px; min-height: 260px; }
+  .consolePane { flex: none; min-height: 140px; }
+  #console { min-height: 120px; }
+}
