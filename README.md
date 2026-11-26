@@ -1,5 +1,7 @@
 # GNSS Monitor online
 
+> **Archived (2026-11-26):** this tool is no longer developed or supported. It stays online as it is at https://www.clearevo.com/gnss/.
+
 Live GPS/GNSS viewer in the browser - u-center-style panels: data fields, satellite sky
 plot, per-satellite SNR bars and raw message console.
 
